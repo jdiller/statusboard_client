@@ -1,0 +1,8 @@
+credentials.py
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pywz
+*.pyzw
