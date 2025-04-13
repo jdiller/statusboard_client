@@ -1,10 +1,9 @@
 import gc
-import framebuf
-import sys
-from e7in5v2 import EPD
-from machine import Pin, SPI, lightsleep
 import time
 import requests
+from e7in5v2 import EPD
+from credentials import STATUSBOARD_URL
+from machine import Pin, SPI, lightsleep
 
 # Define SPI Pins (Using VSPI)
 mosi = Pin(14, Pin.OUT)  # SPI MOSI (DIN)
@@ -23,21 +22,18 @@ try:
     time.sleep(0.1)  # Give it time to stabilize
     # Initialize the display
     e.init()
-    
+
     while True:
         print ("refreshing...")
-        r = requests.get("https://statusboard.diller.ca/statusboard_bytes", stream=True)
+        r = requests.get(STATUSBOARD_URL, stream=True)
         bitmap = r.content
         r.close()
         gc.collect()
-        print (f"Got {len(bitmap)} bytes of image data")
         gc.collect()
         print ("Drawing...")
         e.display_frame(bitmap)
-        print (f"Free memory after drawing {gc.mem_free()}")
         bitmap = None
         gc.collect()
-        print (f"Free memory after garbage collecting {gc.mem_free()}")
         print ("Sleeping...")
         lightsleep(30000)
 finally:
