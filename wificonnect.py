@@ -1,8 +1,6 @@
 import network
 import machine
-
-SSID = "spatulacity"
-KEY = "99th1s991s99th399k3y99"
+from credentials import SSID, KEY
 RETRIES = 20
 
 def do_connect():
