@@ -47,11 +47,17 @@ try:
             error_counter += 1
             print (f"Error: {ex}")
             print ("Trying to reconnect wifi...")
-            do_connect()
+            try:
+                do_connect()
+            except Exception as ex2:
+                print (f"Error happened during error handling: {ex2} - Resetting")
+                reset()
             time.sleep(0.1) #give it pause to flush the io buffer before real device sleep
+            gc.collect()
             lightsleep(3000)
             continue
         error_counter = 0
+        gc.collect()
         bitmap = r.content
         r.close()
         gc.collect()

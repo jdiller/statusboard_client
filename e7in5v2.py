@@ -238,7 +238,7 @@ class EPD:
 
     def display_frame(self, frame_buffer):
         self.send_command(DATA_START_TRANSMISSION_2)
-        for i in range(0, self.height * self.width // 8):
+        for i in range(0, len(frame_buffer)):
             self.send_data(frame_buffer[i])
 
         self.send_command(DISPLAY_REFRESH)
@@ -249,7 +249,7 @@ class EPD:
         # Use the same data transmission command but with different LUT
         self.set_partial_lut()
         self.send_command(DATA_START_TRANSMISSION_2)
-        for i in range(0, self.height * self.width // 8):
+        for i in range(0, len(frame_buffer)):
             self.send_data(frame_buffer[i])
 
         self.send_command(DISPLAY_REFRESH)
@@ -339,7 +339,7 @@ class EPD:
         self.set_quick_lut()  # Set to quick LUT values
 
         self.send_command(DATA_START_TRANSMISSION_2)
-        for i in range(0, self.height * self.width // 8):
+        for i in range(0, len(frame_buffer)):
             self.send_data(frame_buffer[i])
 
         self.send_command(DISPLAY_REFRESH)
